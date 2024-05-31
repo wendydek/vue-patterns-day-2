@@ -9,9 +9,9 @@
           Tattoo artiesten
         </h1>
 
-        <button class="py-2">
+        <AppButton class="mb-4">
           Toon alle beschrijvingen
-        </button>
+        </AppButton>
 
         <div
             v-if="artists.length > 0"
@@ -33,6 +33,7 @@ import { ref } from 'vue';
 import AppModalContainer from '@/components/AppModal/AppModalContainer.vue';
 import TattooCard from '@/components/TattooCard/TattooCard.vue';
 import { convertTatooArtistToViewData } from '@/helpers/dataConverters';
+import AppButton from '@/components/AppButton/AppButton.vue';
 
 import type { TattooArtist } from '@/typings';
 

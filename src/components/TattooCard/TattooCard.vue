@@ -4,7 +4,7 @@
         <p class="mb-2">{{ data.subtitle }}</p>
         <button
             @click="() => { showDescription = !showDescription}"
-            class="mb-2"
+            class="mb-2 text-purple-800"
         >
             <span>
                 {{ showDescription ? 'Verberg' : 'Toon' }} beschrijving
