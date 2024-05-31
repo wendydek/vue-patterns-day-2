@@ -15,12 +15,9 @@
 
         <div
             v-if="artists.length > 0"
-            class="grid gap-4 md:grid-cols-3 xl:grid-cols-4"
         >
-          <TattooCard
-            v-for="artist in artists"
-            :key="artist.id"
-            :data="convertTatooArtistToViewData(artist)"
+          <FeaturedTattooCard
+            :data="convertTatooArtistToViewData(artists[0])"
           />
         </div>
       </div>
@@ -31,7 +28,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import AppModalContainer from '@/components/AppModal/AppModalContainer.vue';
-import TattooCard from '@/components/TattooCard/TattooCard.vue';
+import FeaturedTattooCard from '@/components/TattooCard/FeaturedTattooCard.vue';
 import { convertTatooArtistToViewData } from '@/helpers/dataConverters';
 import AppButton from '@/components/AppButton/AppButton.vue';
 
