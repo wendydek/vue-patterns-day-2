@@ -25,7 +25,7 @@ import { TattooViewData } from '@/typings';
 
 interface Props {
     data: TattooViewData;
-    showDescription: boolean;
+    showDescription: undefined | boolean;
 }
 
 interface Events {
