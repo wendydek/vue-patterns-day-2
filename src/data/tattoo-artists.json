@@ -1,0 +1,37 @@
+{
+    "artists": [
+        {
+            "id": "5dd69f63a492fea7c1cb0fdb",
+            "isActive": 1,
+            "isFeatured": 1,
+            "name": "Roy Veksler",
+            "bio": "Roy Veksler is a talented artist based in Tel-Aviv, Israel. If you ever wondered how Mr. Potato Head, Dexter or tom & Jerry looks like from the inside X-Roy has got your back. Hope you enjoy these graphic and clean tattoos.",
+            "url": "roy-veksler",
+            "image": "Roy%20Veksler/royveksler",
+            "instagram": "royveksler",
+            "country": "Israel"
+        },
+        {
+            "id": "5cac2d2612a64742d6544d11",
+            "isActive": 1,
+            "isFeatured": 1,
+            "name": "Matteo Nangeroni",
+            "bio": "Matteo Nangeroni is a very talented artist located in Italy. His works are original, true works of art.",
+            "url": "matteo-nangeroni",
+            "image": "whitewhaletattoosociety/matteonangeroni",
+            "instagram": "matteonangeroni",
+            "country": "Italy"
+        },
+        {
+            "id": "5de3a0db13d1c11446c5e049",
+            "isActive": 1,
+            "isFeatured": 1,
+            "name": "Brittny Abad",
+            "bio": "Brit Abad, AKA blaabad, is a talented artist located in Portland. Her work is colorful, graphic, strong and romantic. Her work is influenced by the female body, queer love, rainbows and geometric shapes. Hope you enjoy your work as much as i do.",
+            "url": "brittny-abad",
+            "image": "Blaabad/blaabad",
+            "instagram": "blaabad",
+            "country": "United States"
+        }
+    ]
+}
