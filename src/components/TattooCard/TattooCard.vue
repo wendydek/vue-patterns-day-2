@@ -19,15 +19,20 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, watch } from 'vue';
 
 import { TattooViewData } from '@/typings';
 
 interface Props {
     data: TattooViewData;
+    showDescription: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const showDescription = ref(false);
+
+watch(() => props.showDescription, (value) => {
+  showDescription.value = value;
+});
 </script>
