@@ -13,7 +13,7 @@
           class="mb-4"
           @click="showTattooDescription = !showTattooDescription"
         >
-          {{ showTattooDescription ? 'Verberg' : 'Toon' }} alle beschrijvingen
+          {{ showTattooDescription ? 'Verberg' : 'Toon' }} beschrijvingen
         </AppButton>
 
         <div
@@ -21,8 +21,7 @@
         >
           <FeaturedTattooCard
             :data="convertTatooArtistToViewData(artists[0])"
-            :show-description="showTattooDescription"
-            @update:toggle-description="showTattooDescription = !showTattooDescription"
+            v-model:show-description="showTattooDescription"
           />
         </div>
       </div>

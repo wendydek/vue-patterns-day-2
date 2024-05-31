@@ -3,7 +3,7 @@
         <h3 class="font-bold">{{ data.title }}</h3>
         <p class="mb-2">{{ data.subtitle }}</p>
         <button
-            @click="toggleDescription"
+            @click="() => { showDescription = !showDescription}"
             class="mb-2 text-purple-800"
         >
             <span>
@@ -25,17 +25,8 @@ import { TattooViewData } from '@/typings';
 
 interface Props {
     data: TattooViewData;
-    showDescription: boolean;
-}
-
-interface Events {
-    (event: 'update:toggleDescription'): void;
 }
 
 defineProps<Props>();
-const emit = defineEmits<Events>();
-
-function toggleDescription() {
-    emit('update:toggleDescription')
-}
+const showDescription = defineModel<boolean>('showDescription');
 </script>
