@@ -9,8 +9,11 @@
           Tattoo artiesten
         </h1>
 
-        <AppButton class="mb-4">
-          Toon alle beschrijvingen
+        <AppButton
+          class="mb-4"
+          @click="toggleTattooDescription"
+        >
+          {{ featuredTattooCard.showDescription ? 'Verberg' : 'Toon' }} beschrijvingen
         </AppButton>
 
         <div
@@ -18,6 +21,7 @@
         >
           <FeaturedTattooCard
             :data="convertTatooArtistToViewData(artists[0])"
+            ref="featuredTattooCard"
           />
         </div>
       </div>
@@ -36,23 +40,28 @@ import type { TattooArtist } from '@/typings';
 
 const artists = ref<TattooArtist[]>([]);
 const loading = ref(true);
+const featuredTattooCard = ref<typeof FeaturedTattooCard>(FeaturedTattooCard);
+
+function toggleTattooDescription() {
+  featuredTattooCard.value.showDescription = !featuredTattooCard.value.showDescription;
+}
 
 async function fetchArtists() {
-loading.value = true;
+  loading.value = true;
 
-try {
-  const response = await fetch('http://localhost:3000/artists');
+  try {
+    const response = await fetch('http://localhost:3000/artists');
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch artists');
+    if (!response.ok) {
+      throw new Error('Failed to fetch artists');
+    }
+
+    artists.value = await response.json();
+  } catch (error) {
+    console.error('Error fetching artists:', error);
+  } finally {
+    loading.value = false;
   }
-
-  artists.value = await response.json();
-} catch (error) {
-  console.error('Error fetching artists:', error);
-} finally {
-  loading.value = false;
-}
 }
 
 fetchArtists();

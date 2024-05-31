@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, defineExpose } from 'vue';
 
 import { TattooViewData } from '@/typings';
 
@@ -30,4 +30,8 @@ interface Props {
 defineProps<Props>();
 
 const showDescription = ref(false);
+
+defineExpose({
+    showDescription,
+});
 </script>
