@@ -3,7 +3,7 @@
         <h3 class="font-bold">{{ data.title }}</h3>
         <p class="mb-2">{{ data.subtitle }}</p>
         <button
-            @click="() => { showDescription = !showDescription}"
+            @click="toggleDescription"
             class="mb-2 text-purple-800"
         >
             <span>
@@ -19,15 +19,30 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, watch } from 'vue';
 
 import { TattooViewData } from '@/typings';
 
 interface Props {
     data: TattooViewData;
+    showDescriptions: boolean;
 }
 
-defineProps<Props>();
+interface Events {
+    (event: 'update:showDescription', value: boolean): void;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<Events>();
 
 const showDescription = ref(false);
+
+function toggleDescription() {
+    showDescription.value = !showDescription.value;
+    emit('update:showDescription', showDescription.value);
+}
+
+watch(() => props.showDescriptions, (value) => {
+    showDescription.value = value;
+});
 </script>

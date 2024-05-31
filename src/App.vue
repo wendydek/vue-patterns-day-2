@@ -9,8 +9,11 @@
           Tattoo artiesten
         </h1>
 
-        <AppButton class="mb-4">
-          Toon alle beschrijvingen
+        <AppButton
+          class="mb-4"
+          @click="showTattooCardDescriptions = !showTattooCardDescriptions"
+        >
+          {{ showTattooCardDescriptions ? 'Verberg' : 'Toon'}} alle beschrijvingen
         </AppButton>
 
         <div
@@ -21,6 +24,7 @@
             v-for="artist in artists"
             :key="artist.id"
             :data="convertTatooArtistToViewData(artist)"
+            :show-descriptions="showTattooCardDescriptions"
           />
         </div>
       </div>
@@ -39,6 +43,7 @@ import type { TattooArtist } from '@/typings';
 
 const artists = ref<TattooArtist[]>([]);
 const loading = ref(true);
+const showTattooCardDescriptions = ref(false);
 
 async function fetchArtists() {
 loading.value = true;
