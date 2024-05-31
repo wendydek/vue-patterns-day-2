@@ -9,8 +9,11 @@
           Tattoo artiesten
         </h1>
 
-        <AppButton class="mb-4">
-          Toon alle beschrijvingen
+        <AppButton
+          class="mb-4"
+          @click="showTattooDescription = !showTattooDescription"
+        >
+          {{ showTattooDescription ? 'Verberg' : 'Toon' }} beschrijvingen
         </AppButton>
 
         <div
@@ -18,6 +21,8 @@
         >
           <FeaturedTattooCard
             :data="convertTatooArtistToViewData(artists[0])"
+            :show-description="showTattooDescription"
+            @update:toggle-description="showTattooDescription = !showTattooDescription"
           />
         </div>
       </div>
@@ -36,6 +41,7 @@ import type { TattooArtist } from '@/typings';
 
 const artists = ref<TattooArtist[]>([]);
 const loading = ref(true);
+const showTattooDescription = ref(false);
 
 async function fetchArtists() {
 loading.value = true;
