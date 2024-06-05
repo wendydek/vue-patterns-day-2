@@ -11,7 +11,7 @@
 
         <AppButton
           class="mb-4"
-          @click="showTattooDescription = !showTattooDescription"
+          @click="toggleDescription"
         >
           {{ showTattooDescription ? 'Verberg' : 'Toon' }} beschrijvingen
         </AppButton>
@@ -21,8 +21,6 @@
         >
           <FeaturedTattooCard
             :data="convertTatooArtistToViewData(artists[0])"
-            :show-description="showTattooDescription"
-            @update:toggle-description="showTattooDescription = !showTattooDescription"
           />
         </div>
       </div>
@@ -36,29 +34,31 @@ import AppModalContainer from '@/components/AppModal/AppModalContainer.vue';
 import FeaturedTattooCard from '@/components/TattooCard/FeaturedTattooCard.vue';
 import { convertTatooArtistToViewData } from '@/helpers/dataConverters';
 import AppButton from '@/components/AppButton/AppButton.vue';
+import { useToggleDescription } from '@/composables/useToggleDescription';
 
 import type { TattooArtist } from '@/typings';
 
 const artists = ref<TattooArtist[]>([]);
 const loading = ref(true);
 const showTattooDescription = ref(false);
+const { toggleDescription } = useToggleDescription();
 
 async function fetchArtists() {
-loading.value = true;
+  loading.value = true;
 
-try {
-  const response = await fetch('http://localhost:3000/artists');
+  try {
+    const response = await fetch('http://localhost:3000/artists');
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch artists');
+    if (!response.ok) {
+      throw new Error('Failed to fetch artists');
+    }
+
+    artists.value = await response.json();
+  } catch (error) {
+    console.error('Error fetching artists:', error);
+  } finally {
+    loading.value = false;
   }
-
-  artists.value = await response.json();
-} catch (error) {
-  console.error('Error fetching artists:', error);
-} finally {
-  loading.value = false;
-}
 }
 
 fetchArtists();

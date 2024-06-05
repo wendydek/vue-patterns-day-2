@@ -20,22 +20,15 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
+import { useToggleDescription } from '@/composables/useToggleDescription';
 
 import { TattooViewData } from '@/typings';
 
 interface Props {
     data: TattooViewData;
-    showDescription: boolean;
-}
-
-interface Events {
-    (event: 'update:toggleDescription'): void;
 }
 
 defineProps<Props>();
-const emit = defineEmits<Events>();
 
-function toggleDescription() {
-    emit('update:toggleDescription')
-}
+const { showDescription, toggleDescription } = useToggleDescription();
 </script>
