@@ -31,7 +31,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useTitle } from '@vueuse/core';
 import AppModalContainer from '@/components/AppModal/AppModalContainer.vue';
 import FeaturedTattooCard from '@/components/TattooCard/FeaturedTattooCard.vue';
 import { convertTatooArtistToViewData } from '@/helpers/dataConverters';
@@ -42,6 +43,10 @@ import type { TattooArtist } from '@/typings';
 const artists = ref<TattooArtist[]>([]);
 const loading = ref(true);
 const showTattooDescription = ref(false);
+
+const bestArtist = computed(() => artists.value[0]?.name);
+
+useTitle(bestArtist, { titleTemplate: '%s | The best tattoo artist' })
 
 async function fetchArtists() {
   loading.value = true;
