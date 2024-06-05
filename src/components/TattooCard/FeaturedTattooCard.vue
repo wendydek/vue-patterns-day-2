@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, ref, computed } from 'vue';
 
 import { TattooViewData } from '@/typings';
 
@@ -32,10 +32,24 @@ interface Events {
     (event: 'update:toggleDescription'): void;
 }
 
-defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+    showDescription: undefined,
+});
+
 const emit = defineEmits<Events>();
 
+const _showDescription = ref(true);
+
 function toggleDescription() {
-    emit('update:toggleDescription')
-}
+    if (props.showDescription !== undefined) {
+        emit('update:toggleDescription');
+    } else {
+        _showDescription.value = !_showDescription.value;
+    }
+};
+
+const showDescription = computed(() =>
+  props.showDescription !== undefined ? props.showDescription : _showDescription.value
+);
+
 </script>

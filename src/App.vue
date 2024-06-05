@@ -44,21 +44,21 @@ const loading = ref(true);
 const showTattooDescription = ref(false);
 
 async function fetchArtists() {
-loading.value = true;
+  loading.value = true;
 
-try {
-  const response = await fetch('http://localhost:3000/artists');
+  try {
+    const response = await fetch('http://localhost:3000/artists');
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch artists');
+    if (!response.ok) {
+      throw new Error('Failed to fetch artists');
+    }
+
+    artists.value = await response.json();
+  } catch (error) {
+    console.error('Error fetching artists:', error);
+  } finally {
+    loading.value = false;
   }
-
-  artists.value = await response.json();
-} catch (error) {
-  console.error('Error fetching artists:', error);
-} finally {
-  loading.value = false;
-}
 }
 
 fetchArtists();
