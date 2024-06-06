@@ -20,9 +20,14 @@
             v-if="artists.length > 0"
         >
           <FeaturedTattooCard
+            class="mb-6"
             :data="convertTatooArtistToViewData(artists[0])"
             :show-description="showTattooDescription"
             @update:toggle-description="showTattooDescription = !showTattooDescription"
+          />
+
+          <TattooArtists
+            :artists="artists"
           />
         </div>
       </div>
@@ -35,6 +40,7 @@ import { ref, computed } from 'vue';
 import { useTitle, useStorage } from '@vueuse/core';
 import AppModalContainer from '@/components/AppModal/AppModalContainer.vue';
 import FeaturedTattooCard from '@/components/TattooCard/FeaturedTattooCard.vue';
+import TattooArtists from '@/views/TattooArtists/components/TattooArtists.vue';
 import { convertTatooArtistToViewData } from '@/helpers/dataConverters';
 import AppButton from '@/components/AppButton/AppButton.vue';
 
