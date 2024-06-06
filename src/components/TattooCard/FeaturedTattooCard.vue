@@ -1,5 +1,11 @@
 <template>
-    <div class="bg-gray-50 p-4 rounded-md">
+    <div
+        class="bg-gray-50 p-4 rounded-md"
+        ref="container"
+    >
+        <div v-if="isLoading">Loading image..</div>
+        <div v-else-if="error">Couldn't load the image :(</div>
+        <img v-else :src="imageUrl" />
         <h3 class="font-bold">{{ data.title }}</h3>
         <p class="mb-2">{{ data.subtitle }}</p>
         <button
@@ -20,6 +26,7 @@
 
 <script setup lang="ts">
 import { defineProps, ref, computed } from 'vue';
+import { onClickOutside, useImage } from '@vueuse/core';
 
 import { TattooViewData } from '@/typings';
 
@@ -39,6 +46,19 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<Events>();
 
 const _showDescription = ref(true);
+const container = ref(null)
+const imageUrl = 'https://placehold.co/400x300';
+
+const { isLoading, error } = useImage(
+  {
+    src: imageUrl,
+  },
+  {
+    delay: 500,
+  }
+);
+
+onClickOutside(container, () => alert('You are so far off.'))
 
 function toggleDescription() {
     if (props.showDescription !== undefined) {
