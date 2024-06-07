@@ -23,6 +23,7 @@
         <div
             v-if="artistStore.artists.length > 0"
         >
+        {{ artistStore.artists }}
           <FeaturedTattooCard
             class="mb-6"
             :data="convertTatooArtistToViewData(artistStore.artists[0])"

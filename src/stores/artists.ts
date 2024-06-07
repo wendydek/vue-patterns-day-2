@@ -1,25 +1,30 @@
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { defineStore } from 'pinia';
+import { useFetch } from '@vueuse/core';
 
 import type { TattooArtist } from '@/typings';
 
 export const useArtistStore = defineStore('artistStore', () => {
     const artists = ref<TattooArtist[]>([]);
     const loading = ref(false);
+    const error = ref(null);
 
     const fetchArtists = async () => {
-        loading.value = true;
-        try {
-            const response = await fetch('http://localhost:3000/artists');
-            if (!response.ok) {
-                throw new Error('Failed to fetch artists');
+        const response = useFetch<TattooArtist[]>('http://localhost:3000/artists').json();
+
+        watch(response.isFetching, (value) => {
+            loading.value = value;
+        });
+
+        watch(response.isFinished, () => {
+            if(response.error.value) {
+                error.value = response.error.value;
             }
-            artists.value = await response.json();
-        } catch (error) {
-            console.error('Error fetching artists:', error);
-        } finally {
-            loading.value = false;
-        }
+
+            if(response.data.value) {
+                artists.value = response.data.value;
+            }
+        });
     };
 
     const addArtist = async (newArtist: TattooArtist) => {
@@ -44,6 +49,7 @@ export const useArtistStore = defineStore('artistStore', () => {
     return {
       artists,
       loading,
+      error,
       
       fetchArtists,
       addArtist
