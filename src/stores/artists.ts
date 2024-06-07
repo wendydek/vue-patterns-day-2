@@ -28,22 +28,21 @@ export const useArtistStore = defineStore('artistStore', () => {
     };
 
     const addArtist = async (newArtist: TattooArtist) => {
-        try {
-            const response = await fetch('http://localhost:3000/artists', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newArtist),
-            });
-            if (!response.ok) {
-                throw new Error('Failed to add artist');
+        const response = useFetch<TattooArtist>('http://localhost:3000/artists').json().post(newArtist);
+    
+        watch(response.isFetching, (value) => {
+            loading.value = value;
+        });
+    
+        watch(response.isFinished, () => {
+            if(response.error.value) {
+                error.value = response.error.value;
             }
-            const addedArtist = await response.json();
-            artists.value.push(addedArtist);
-        } catch (error) {
-            console.error('Error adding artist:', error);
-        }
+            
+            if(response.data.value) {
+                artists.value.push(response.data.value);
+            }
+        });
     };
 
     return {
