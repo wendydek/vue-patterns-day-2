@@ -1,6 +1,10 @@
 <template>
   <AppModalContainer />
-  <div class="flex flex-col justify-center items-center">
+  <p v-if="artistStore.loading">Loading..</p>
+  <div
+    v-else
+    class="flex flex-col justify-center items-center"
+  >
     <div class="w-full max-w-screen-2xl px-2">
       <img alt="Vue logo" src="./assets/logo.png" width="100" class="p-2">
   
@@ -17,17 +21,17 @@
         </AppButton>
 
         <div
-            v-if="artists.length > 0"
+            v-if="artistStore.artists.length > 0"
         >
           <FeaturedTattooCard
             class="mb-6"
-            :data="convertTatooArtistToViewData(artists[0])"
+            :data="convertTatooArtistToViewData(artistStore.artists[0])"
             :show-description="showTattooDescription"
             @update:toggle-description="showTattooDescription = !showTattooDescription"
           />
 
           <TattooArtists
-            :artists="artists"
+            :artists="artistStore.artists"
           />
         </div>
       </div>
@@ -43,33 +47,20 @@ import FeaturedTattooCard from '@/components/TattooCard/FeaturedTattooCard.vue';
 import TattooArtists from '@/views/TattooArtists/components/TattooArtists.vue';
 import { convertTatooArtistToViewData } from '@/helpers/dataConverters';
 import AppButton from '@/components/AppButton/AppButton.vue';
+import { useArtistStore } from '@/stores/artists';
 
 import type { TattooArtist } from '@/typings';
 
 const artists = ref<TattooArtist[]>([]);
-const loading = ref(true);
 const showTattooDescription = useStorage('showTattooDescription', false);
+const artistStore = useArtistStore();
 
 const bestArtist = computed(() => artists.value[0]?.name);
 
 useTitle(bestArtist, { titleTemplate: '%s | The best tattoo artist' })
 
 async function fetchArtists() {
-  loading.value = true;
-
-  try {
-    const response = await fetch('http://localhost:3000/artists');
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch artists');
-    }
-
-    artists.value = await response.json();
-  } catch (error) {
-    console.error('Error fetching artists:', error);
-  } finally {
-    loading.value = false;
-  }
+  await artistStore.fetchArtists();
 }
 
 fetchArtists();
